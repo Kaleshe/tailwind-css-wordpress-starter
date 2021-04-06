@@ -7,7 +7,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 module.exports = {
   context: __dirname,
   entry: {
-    frontend: ['./src/index.js', './src/sass/style.scss']
+    frontend: ['./index.js', './src/sass/style.scss']
   },
   output: {
     path: path.resolve(__dirname, 'public'),
