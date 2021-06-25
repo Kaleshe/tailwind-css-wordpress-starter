@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package your_theme_name
+ * @package Lior_Global_Partners
  */
 
 ?>
@@ -22,7 +22,7 @@
 
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'your_theme_name' ),
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'lior-gp' ),
 				'after'  => '</div>',
 			)
 		);
@@ -36,7 +36,7 @@
 				sprintf(
 					wp_kses(
 						/* translators: %s: Name of current post. Only visible to screen readers */
-						__( 'Edit <span class="screen-reader-text">%s</span>', 'your_theme_name' ),
+						__( 'Edit <span class="screen-reader-text">%s</span>', 'lior-gp' ),
 						array(
 							'span' => array(
 								'class' => array(),

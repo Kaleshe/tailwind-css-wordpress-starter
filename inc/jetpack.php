@@ -4,7 +4,7 @@
  *
  * @link https://jetpack.com/
  *
- * @package your_theme_name
+ * @package Your Theme Name
  */
 
 /**

@@ -1,25 +1,30 @@
   
 a, a:visited {
   text-decoration: none;
-	color: $black-800;
+  color: inherit;
 }
 
 .logo {
 	max-width: 175px;
 }
 
+.hamburger {
+	@apply z-50;
+}
+
 .main-navigation {
+	width: 100%;
 	position: fixed;
 	background: white;
 	height: 100%;
-	z-index: 100;
 	top: 0;
-	left: -100%;
+	opacity: 0;
+	left: 0;
 	transition: all ease-in-out .3s;
-	@apply shadow-2xl pt-12 text-base;
+	@apply pt-12 text-base z-30 font-semibold transition-opacity duration-500;
 
 	&.toggled {
-		left: 0;
+		opacity: 1;
 	}
 
 	a {
@@ -43,7 +48,7 @@ a, a:visited {
 	@apply mb-16;
 }
 
-@media screen and (min-width: $md) {
+@screen md { 
 	.site-footer {
 		@apply mb-0;
 	}
@@ -72,9 +77,11 @@ a, a:visited {
 	.main-navigation {
 		display: block;
 		position: static;
-    background: transparent;
-    height: unset;
-    z-index: unset;
+		background: transparent;
+		height: unset;
+		z-index: unset;
+		width: unset;
+		opacity: 1;
 		@apply shadow-none pt-0 text-sm;
 
 		a {

@@ -2,7 +2,7 @@
 /**
  * your_theme_name Theme Customizer
  *
- * @package your_theme_name
+ * @package Your Theme Name
  */
 
 /**

@@ -4,13 +4,13 @@
  *
  * @link https://codex.wordpress.org/Creating_an_Error_404_Page
  *
- * @package your_theme_name
+ * @package Your Theme Name
  */
 
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+	<main id="primary" class="site-main px-8">
 
 		<section class="error-404 not-found">
 			<header class="page-header">

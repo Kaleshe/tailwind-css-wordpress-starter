@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package your_theme_name
+ * @package Your Theme Name
  */
 
 if ( ! defined( '_S_VERSION' ) ) {
@@ -141,11 +141,8 @@ add_action( 'widgets_init', 'your_theme_name_widgets_init' );
  */
 function your_theme_name_scripts() {
 	wp_enqueue_style( 'your_theme_name-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_enqueue_style( 'your_theme_name-frontend', get_template_directory_uri() . '/public/frontend.css', array(), _S_VERSION );
-	wp_enqueue_style( 'aos-style', 'https://unpkg.com/aos@2.3.1/dist/aos.css' );
-
-	wp_enqueue_script( 'your_theme_name-script', get_template_directory_uri() . '/public/frontend-bundle.js', array(), _S_VERSION );
-	wp_enqueue_script( 'aos-script', 'https://unpkg.com/aos@2.3.1/dist/aos.js' );
+	wp_enqueue_style( 'your_theme_name-frontend', get_template_directory_uri() . '/public/frontend.css?v=' . strtotime("now"), array(), null );
+	wp_enqueue_script( 'your_theme_name-script', get_template_directory_uri() . '/public/frontend-bundle.js?v=' . strtotime("now"), array(), null, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -181,56 +178,29 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 /**
- * Adjust excerpt length
+ * Echoes print_r data within pre tags for easier viewing
  */
-function your_theme_name_custom_excerpt_length( $length ) {
-	return 30;
+function dump($data) {
+	echo '<pre>';
+	print_r($data);
+	echo '</pre>';
 }
-add_filter( 'excerpt_length', 'your_theme_name_custom_excerpt_length', 999 );
 
 /**
- * Remove dots after excerpt
+ * Hide admin bar
  */
-function new_excerpt_more( $more ) {
-	return ' ...';
+add_action('after_setup_theme', 'remove_admin_bar');
+function remove_admin_bar() {
+	show_admin_bar(false);
 }
-add_filter('excerpt_more', 'new_excerpt_more');
 
 /**
- * Modify comments code  
- */            
-function your_theme_name_slug_comments($comment, $args, $depth) {
-	$GLOBALS['comment'] = $comment; ?>
-	<li <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">
-	    
-		<div class="comment-wrap flex mb-8">
-			<div class="comment-img mr-4">
-				<?php echo get_avatar($comment,$args['avatar_size'],null,null,array('class' => array('img-responsive', 'img-circle', 'rounded-full') )); ?>
-			</div>
-			<div class="comment-body">
-				<h4 class="comment-author font-semibold"><?php echo get_comment_author_link(); ?></h4>
-				<span class="comment-date text-xs opacity-90"><?php printf(__('%1$s at %2$s', 'your_theme_name'), get_comment_date(),  get_comment_time()) ?></span>
-				<?php if ($comment->comment_approved == '0') { ?><em><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> <?php _e('Comment awaiting approval', 'your_theme_name'); ?></em><br /><?php } ?>
-				<?php comment_text(); ?>
-				<span class="comment-reply font-bold text-xs"> <?php comment_reply_link(array_merge( $args, array('reply_text' => __('Reply', 'your_theme_name'), 'depth' => $depth, 'max_depth' => $args['max_depth'])), $comment->comment_ID); ?></span>
-			</div>
-		</div>
-<?php }
-
-// Enqueue comment-reply
-
-add_action('wp_enqueue_scripts', 'your_theme_name_slug_public_scripts');
-
-function your_theme_name_slug_public_scripts() {
-    if (!is_admin()) {
-        if (is_singular() && get_option('thread_comments')) { wp_enqueue_script('comment-reply'); }
-    }
-}
-
-// Enqueue fontawesome
-
-add_action('wp_enqueue_scripts', 'your_theme_name_slug_public_styles');
-
-function your_theme_name_slug_public_styles() {
-        wp_enqueue_style( 'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), '4.7.0', 'all');
+ * Restrict regular user access from admin page
+ */
+add_action( 'admin_init', 'redirect_non_admin_users' );
+function redirect_non_admin_users() {
+	if ( ( !defined('DOING_AJAX') || ! DOING_AJAX ) &&  ! current_user_can( 'manage_options' ) && ('/wp-admin/admin-ajax.php' != $_SERVER['PHP_SELF']) ) {
+	wp_redirect( home_url() );
+	exit;
+	}
 }

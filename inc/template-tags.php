@@ -4,7 +4,7 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @package your_theme_name
+ * @package Your Theme Name
  */
 
 if ( ! function_exists( 'your_theme_name_posted_on' ) ) :

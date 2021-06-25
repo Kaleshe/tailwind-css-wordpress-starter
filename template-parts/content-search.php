@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package your_theme_name
+ * @package Lior_Global_Partners
  */
 
 ?>
